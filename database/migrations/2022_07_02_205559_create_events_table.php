@@ -20,6 +20,8 @@ return new class extends Migration
             $table->string('event_name');
             $table->string('location');
             $table->string('event_date');
+            $table->string('maximun_seats');
+            $table->text('image_path');
             $table->enum('status', ['active', 'inactive'])->default('active');
             $table->enum('type', ['free', 'paid']);
             $table->softDeletes();
