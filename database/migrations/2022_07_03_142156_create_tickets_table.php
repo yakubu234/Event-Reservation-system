@@ -19,6 +19,8 @@ return new class extends Migration
             $table->foreignId('event_id')->constrained('events')->onDelete('cascade');
             $table->double('amount', 8, 2);
             $table->enum('type', ['regular', 'gold', 'silver', 'platimum']);
+            $table->string('current_reservation');
+            $table->string('maximum_reservation');
             $table->timestamps();
         });
     }
