@@ -31,6 +31,10 @@ class CreateEventRequest extends FormRequest
             'event_date' => ['required', 'date_format:Y-m-d'],
             'status' => ['in:active,inactive'],
             'type' => ['in:free,paid'],
+            'maximun_seats' => ['required'],
+            'start_time' => ['required'],
+            'end_time' => ['required'],
+            'file' => ['file', 'mimes:img,mp4,jpeg,jpg,png,ico', 'max:2048']
         ];
     }
 }

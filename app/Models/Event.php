@@ -18,6 +18,10 @@ class Event extends Model
         'event_name',
         'location',
         'event_date',
+        'start_time',
+        'end_time',
+        'maximun_seats',
+        'image_path',
         'status',
         'type',
     ];
