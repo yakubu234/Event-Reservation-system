@@ -18,9 +18,7 @@ class CreateEventAction
 
     public function execute(array $data, $image_path)
     {
-
         $data['image_path'] = $image_path;
-
         $this->data = $data;
         return $this->create();
     }

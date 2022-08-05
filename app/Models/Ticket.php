@@ -14,5 +14,7 @@ class Ticket extends Model
         'amount',
         'type',
         'uid',
+        'maximum_reservation',
+        'current_reservation'
     ];
 }

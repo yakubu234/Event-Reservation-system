@@ -26,7 +26,7 @@ class CreateEventRequest extends FormRequest
     {
         return [
             'user_id' => ['required', 'string', 'exists:users,uid'],
-            'event_name' => ['required', 'string'],
+            'event_name' => ['required', 'string', 'unique:events,event_name'],
             'location' => ['required', 'string'],
             'event_date' => ['required', 'date_format:Y-m-d'],
             'status' => ['in:active,inactive'],

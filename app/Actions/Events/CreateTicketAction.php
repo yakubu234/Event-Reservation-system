@@ -28,7 +28,8 @@ class CreateTicketAction
             'uid' => Str::orderedUuid(),
             'event_id' => $event->id,
             'amount' => $this->data['amount'],
-            'type' => $this->data['type']
+            'type' => $this->data['type'],
+            'maximum_reservation' => $this->data['maximum_reservation']
         ]);
 
         return $this->success(['ticket' => $ticket], 'Ticket created successfully');
