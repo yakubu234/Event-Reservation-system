@@ -28,6 +28,7 @@ class CreateTicketRequest extends FormRequest
             'event_id' => ['required', 'string', 'exists:events,uid'],
             'amount' => ['required', 'integer'],
             'type' => ['required', 'in:regular,gold,silver,platinum'],
+            'maximum_reservation' => ['required', 'int'],
         ];
     }
 }

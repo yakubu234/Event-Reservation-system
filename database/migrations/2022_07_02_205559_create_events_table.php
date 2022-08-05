@@ -20,8 +20,12 @@ return new class extends Migration
             $table->string('event_name');
             $table->string('location');
             $table->string('event_date');
+            $table->string('start_time');
+            $table->string('end_time')->nullable();
+            $table->string('total_reservation')->nullable();
             $table->string('maximun_seats');
-            $table->text('image_path');
+            $table->string('tickect_type_count')->nullable();
+            $table->text('image_path')->nullable();
             $table->enum('status', ['active', 'inactive'])->default('active');
             $table->enum('type', ['free', 'paid']);
             $table->softDeletes();

@@ -16,9 +16,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::post('/register', [AuthController::class, 'register']);
-Route::post('/signin', [AuthController::class, 'signin']);
+Route::post('register', [AuthController::class, 'register']);
+Route::post('signin', [AuthController::class, 'signin']);
+Route::get('', [EventController::class, 'all']);
 
+// Route::post('/reservation', [AuthController::class, 'signin']);
+// Route::post('/track-event', [AuthController::class, 'signin']);
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('/sign-out', [AuthController::class, 'logout']);
@@ -27,6 +30,8 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
         Route::get('', [EventController::class, 'all']);
         Route::get('my-events', [EventController::class, 'myEvent']);
         Route::post('create', [EventController::class, 'create']);
+
+
         Route::post('update', [EventController::class, 'update']);
         Route::delete('delete', [EventController::class, 'delete']);
         Route::post('create-ticket', [EventController::class, 'createTicket']);
