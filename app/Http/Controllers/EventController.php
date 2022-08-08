@@ -19,24 +19,32 @@ class EventController extends Controller
 
     public function create(CreateEventRequest $request)
     {
-        $image_path = null;
+        $data = $request->all();
 
         if ($request->file()) {
             $fileName = time() . '_' . $request->file->getClientOriginalName();
             $filePath = $request->file('file')->storeAs('file', $fileName, 'public');
             (array) $request = $request->validated();
-            unset($request['file']);
-            $image_path = '/storage/' . $filePath;
-        } else {
-            $request = $request->all();
+            unset($data['file']);
+            $data['image_path'] = '/storage/' . $filePath;
         }
 
-        return (new CreateEventAction())->execute($request, $image_path);
+        return (new CreateEventAction())->execute($data);
     }
 
     public function update(EventIdOnlyRequest $request)
     {
-        return (new UpdateEventAction())->execute($request->all());
+        $data = $request->all();
+
+        if ($request->file()) {
+            $fileName = time() . '_' . $request->file->getClientOriginalName();
+            $filePath = $request->file('file')->storeAs('file', $fileName, 'public');
+            (array) $request = $request->validated();
+            unset($data['file']);
+            $data['image_path'] = '/storage/' . $filePath;
+        }
+
+        return (new UpdateEventAction())->execute($data);
     }
 
     public function delete(EventIdOnlyRequest $request)

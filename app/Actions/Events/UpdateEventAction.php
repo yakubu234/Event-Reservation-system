@@ -14,12 +14,10 @@ class UpdateEventAction
 
     public function execute(array $data)
     {
-        $event = Event::where('uid', $data['event_id'])->first();
-        if (!$event) {
-            return $this->error('An event with this id was not found', 400);
-        }
+        $eventId = $data['event_id'];
+        unset($data['event_id']);
 
-        $event->update($data);
+        $event = tap(Event::where('uid', $eventId))->update($data)->first();
 
         return $this->success(['event' => new EventResource($event)], 'Event updated successfully');
     }

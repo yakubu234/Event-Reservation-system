@@ -16,28 +16,20 @@ class CreateEventAction
 
     protected $data;
 
-    public function execute(array $data, $image_path)
+    public function execute(array $data)
     {
-        $data['image_path'] = $image_path;
         $this->data = $data;
         return $this->create();
     }
 
     private function create()
     {
-        $user = User::findByUid($this->data['user_id']);
-        $event = Event::create([
-            'uid' => Str::orderedUuid(),
-            'user_id' => $user->id,
-            'event_name' => $this->data['event_name'],
-            'location' => $this->data['location'],
-            'event_date' => $this->data['event_date'],
-            'start_time' => $this->data['start_time'],
-            'end_time' => $this->data['end_time'],
-            'maximun_seats' => $this->data['maximun_seats'],
-            'image_path' => $this->data['image_path'],
-            'type' => $this->data['type'],
+
+        $this->data = array_merge($this->data, [
+            'uid' => Str::orderedUuid()
         ]);
+
+        $event = Event::create($this->data);
 
         return $this->success(['event' => new EventResource($event)], 'Event added successfully');
     }

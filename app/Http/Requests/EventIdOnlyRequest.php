@@ -25,7 +25,16 @@ class EventIdOnlyRequest extends FormRequest
     public function rules()
     {
         return [
-            'event_id' => ['required', 'string', 'exists:events,uid']
+            'event_id' => ['required', 'string', 'exists:events,uid'],
+            'event_name' => ['string', 'unique:events,event_name'],
+            'location' => ['string'],
+            'event_date' => ['date_format:Y-m-d'],
+            'status' => ['in:active,inactive'],
+            'type' => ['in:free,paid'],
+            'maximun_seats' => ['string'],
+            'start_time' => ['string'],
+            'end_time' => ['string'],
+            'file' => ['file', 'mimes:img,mp4,jpeg,jpg,png,ico', 'max:2048']
         ];
     }
 }
