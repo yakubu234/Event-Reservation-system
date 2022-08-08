@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-<?php const URL = "local"; ?>
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -422,7 +422,7 @@
             </div>
         @endif
 
-        <div class="max-w-9xl mx-auto sm:px-6 lg:px-8">
+        <div class="max-w-6xl mx-auto sm:px-6 lg:px-8">
             <div class="flex justify-center pt-8 sm:justify-start sm:pt-0">
                 <svg viewBox="0 0 651 192" fill="none" xmlns="http://www.w3.org/2000/svg"
                     class="h-16 w-auto text-gray-700 sm:h-20">
@@ -434,8 +434,8 @@
             </div>
 
             <div class="mt-8 bg-white dark:bg-gray-800 overflow-hidden shadow sm:rounded-lg">
-                {{-- <div class="grid grid-cols-1 md:grid-cols-2"> --}}
-                    {{-- <div class="p-6"> --}}
+                <div class="grid grid-cols-1 md:grid-cols-2">
+                    <div class="p-6">
 
 
 
@@ -449,7 +449,7 @@
                             &nbsp;|&nbsp;
                             This is the documentation for EventX an online event organizing and reservation system. the
                             API is hosted on Heroku, and can be found at https://event-reservation-system.herokuapp.com
-                            if you want to test the endpoints then the variable  &#123;&#123; url &#125;&#125;  should be
+                            if you want to test the endpoints then the variable  url  should be
                             https://event-reservation-system.herokuapp.com without trailing slash or your server IP
                             Address if you clone the Laravel app to your local machine.
                             All .env parameters needed are available at the .env.example file, kindly use the variable
@@ -8860,7 +8860,7 @@
                                     <p>All .env parameters needed are available at the .env.example file, kindly use the
                                         variable and replace with your own parameters.you can as well view a postman
                                         version of this documentation at
-                                        <a href="https://documenter.getpostman.com/view/12538701/UzkQayEk">https://documenter.getpostman.com/view/12538701/UzkQayEk</a>
+                                        https://documenter.getpostman.com/view/12538701/UzkQayEk
                                 </div>
                                 <div class=col-md-12>
                                     <div class=col-md-3>
@@ -8934,10 +8934,6 @@
                                                                                 <td>Accept
                                                                                 <td>application/json
                                                                                 <td>
-                                                                                    <tr>
-                                                                                        <td>Authorization
-                                                                                        <td>Bearer Token
-                                                                                        <td>
                                                                     </table>
                                                                     <h5 class="label label-primary">Body</h5>
                                                                     <table class="table table-hover">
@@ -15698,8 +15694,8 @@
 
 
 
-                        {{-- </div> --}}
-                    {{-- </div> --}}
+                        </div>
+                    </div>
                 </div>
 
                 <div class="flex justify-center mt-4 sm:items-center sm:justify-between">
