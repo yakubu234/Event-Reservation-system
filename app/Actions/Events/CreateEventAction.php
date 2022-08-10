@@ -24,9 +24,11 @@ class CreateEventAction
 
     private function create()
     {
-
+        $user = User::findByUid($this->data['user_id']);
         $this->data = array_merge($this->data, [
-            'uid' => Str::orderedUuid()
+            'uid' => Str::orderedUuid(),
+            'tickect_type_count' => 0,
+            'user_id' => $user->id,
         ]);
 
         $event = Event::create($this->data);

@@ -22,7 +22,7 @@ class EventResource extends JsonResource
             'event_uid' => $this->uid,
             'maximun_seats' => $this->maximun_seats,
             'start_time' => $this->start_time,
-            'media_file' => $this->file,
+            'media_file' => $this->image_path,
             'type' => $this->type,
             'user' => $this->user,
             'ticket' => $this->ticket,
