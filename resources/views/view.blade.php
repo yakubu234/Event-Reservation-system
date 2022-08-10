@@ -402,13 +402,13 @@
             font-family: 'Nunito', sans-serif;
         }
     </style>
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/swagger-ui.css')}}" />
 </head>
 
-<body class="antialiased" >
-    <iframe src="https://app.swaggerhub.com/apis-docs/ABIOLAYAKUBU_1/Api-test-2/1.0.0" style="width: 100%; height: 100%;">
-        <?php
-echo file_get_contents('https://app.swaggerhub.com/apis-docs/ABIOLAYAKUBU_1/Api-test-2/1.0.0');
-?>
+<div id="swagger-ui"></div>
+    <script src="{{ asset('css/swagger-ui-bundle.js')}}" charset="UTF-8"> </script>
+    <script src="{{ asset('css/swagger-ui-standalone-preset.js')}}" charset="UTF-8"> </script>
+    <script src="{{ asset('css/swagger-initializer.js')}}" charset="UTF-8"> </script>
 
 
 </body>
