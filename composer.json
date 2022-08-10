@@ -50,7 +50,7 @@
             "chmod -R 775 public/",
             "chmod -R 777 storage/app/",
             "php artisan storage:link",
-            "chmod -R 777 public/storage/file"
+            "chmod -R 777 public/storage"
 
 
         ]
