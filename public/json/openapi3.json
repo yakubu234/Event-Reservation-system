@@ -1,0 +1,1585 @@
+openapi: 3.0.0
+info:
+  title: Event Scheduling and Resevation
+  description: >-
+    This is the documentation for EventX an online event organizing and
+    reservation system. the API is hosted on Heroku, and can be found at
+    https://event-reservation-system.herokuapp.com
+
+
+    if you want to test the endpoints then the variable {{url}} should be
+    https://event-reservation-system.herokuapp.com without trailing slash or
+    your server IP Address if you clone the Laravel app to your local machine.
+
+
+    All .env parameters needed are available at the .env.example file, kindly
+    use the variable and replace with your own parameters. you can as well view
+    a postman version of this documentation at
+    https://documenter.getpostman.com/view/12538701/UzkQayEk
+  version: 1.0.0
+servers:
+  - url: http://{{url}}
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+tags:
+  - name: Event
+  - name: Authentication
+paths:
+  /api/event/create:
+    post:
+      tags:
+        - Event
+      summary: Create an event
+      description: >-
+        This endpoint create unique event. This is a Post request, and requires
+        Authorization bearer Token, which is the token generated on Login. This
+        endpoint consist of the below payload.
+
+
+
+        ~~required field~~
+
+
+        1. user_id : this is the UiD returned at the login, its unique to
+        individual authenticated users. this endpoint is expecting  a string
+        datatype.
+
+
+        2. event_name: this is unique and is being validated at the backend. it
+        accepts string data type.
+
+
+        3. location : This is the address or landmark to where the event will
+        take place.
+
+
+        4. event_date : This is the exact date of the event, it accepts a string
+        datatype.
+
+
+        5. status : This is an Enum field, it accepts only one of this two
+        'active' or 'inactive' by default an event that's about to be created is
+        active
+
+
+        6. type : This is an Enum field, it accepts only one of htis two 'free',
+        'paid' . a paid event will make use of paystack as the payment gateway.
+
+
+        7. maximun_seats : This is the total number of reservations available
+        for the event. it accepts string or integer data type.
+
+
+        8. start_time : This is the expected start time of the event, it accepts
+        a string data type
+
+
+
+        ~~non-required field~~
+
+
+        9. end_time : This is the presumed time the event will end. its a string
+        data type, and not a required field.
+
+
+        10. file : This is can be a picture or a short advertisement video not
+        more than 2mb in size. this is an optional field.
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                user_id:
+                  type: string
+                  example: 96f99c05-7cd7-4cc8-83ef-3ae0631ec708
+                event_name:
+                  type: string
+                  example: NaijaHacks hundred 10
+                location:
+                  type: string
+                  example: Zone Tech park, Gbagada, Lagos
+                event_date:
+                  type: string
+                  example: '2022-10-23'
+                type:
+                  type: string
+                  example: paid
+                start_time:
+                  type: string
+                  example: '39:00'
+                end_time:
+                  type: string
+                  example: '40:00'
+                file:
+                  type: string
+                  format: binary
+                maximun_seats:
+                  type: integer
+                  example: '50'
+                status:
+                  type: string
+                  example: active
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+      responses:
+        '200':
+          description: OK
+          headers:
+            Host:
+              schema:
+                type: number
+                example: 127.0.0.1:8000
+            Date:
+              schema:
+                type: string
+                example: Mon, 08 Aug 2022 10:38:24 GMT
+            Connection:
+              schema:
+                type: string
+                example: close
+            X-Powered-By:
+              schema:
+                type: number
+                example: PHP/8.1.8
+            Cache-Control:
+              schema:
+                type: string
+                example: no-cache, private
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+            X-RateLimit-Limit:
+              schema:
+                type: integer
+                example: '60'
+            X-RateLimit-Remaining:
+              schema:
+                type: integer
+                example: '58'
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+          content:
+            application/json:
+              schema:
+                type: object
+              examples:
+                example-0:
+                  summary: Create an event
+                  value:
+                    status: Success
+                    message: Event added successfully
+                    data:
+                      event:
+                        id: 96f8d76f-23e9-4e68-9bbd-50603b162683
+                        event_name: NaijaHacks hundred 10
+                        location: Zone Tech park, Gbagada, Lagos
+                        event_date: '2022-10-23'
+                        event_uid: 96f8d76f-23e9-4e68-9bbd-50603b162683
+                        maximun_seats: '50'
+                        start_time: '39:00'
+                        media_file: null
+                        type: paid
+                        user:
+                          id: 1
+                          uid: 96f8c9d6-528d-471a-94b9-4e210832fa4a
+                          first_name: Abiola
+                          last_name: Yakubu
+                          email: yakubuabiola2003@gmail.com
+                          email_verified_at: null
+                          created_at: '2022-08-08T10:00:23.000000Z'
+                          updated_at: '2022-08-08T10:00:23.000000Z'
+                        ticket: []
+                example-1:
+                  summary: Create an event
+                  value:
+                    status: Success
+                    message: Event added successfully
+                    data:
+                      event:
+                        id: 96f1c3ce-bc2b-4671-893c-f3f5c2e07b03
+                        event_name: NaijaHacks
+                        location: Zone Tech park, Gbagada, Lagos
+                        event_date: '2022-10-23'
+                        type: paid
+                        user:
+                          id: 1
+                          uid: 96f1bdca-21e3-4874-95a4-435c208d7f66
+                          first_name: Abiola
+                          last_name: Yakubu
+                          email: yakubuabiola2003@gmail.com
+                          email_verified_at: null
+                          created_at: '2022-08-04T21:55:54.000000Z'
+                          updated_at: '2022-08-04T21:55:54.000000Z'
+                        ticket: []
+        '422':
+          description: Unprocessable Content
+          headers:
+            Host:
+              schema:
+                type: number
+                example: 127.0.0.1:8000
+            Date:
+              schema:
+                type: string
+                example: Fri, 05 Aug 2022 11:09:57 GMT
+            Connection:
+              schema:
+                type: string
+                example: close
+            X-Powered-By:
+              schema:
+                type: number
+                example: PHP/8.1.8
+            Cache-Control:
+              schema:
+                type: string
+                example: no-cache, private
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+            X-RateLimit-Limit:
+              schema:
+                type: integer
+                example: '60'
+            X-RateLimit-Remaining:
+              schema:
+                type: integer
+                example: '59'
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+          content:
+            application/json:
+              schema:
+                type: object
+              examples:
+                example-0:
+                  summary: Create an event error
+                  value:
+                    message: The event name has already been taken.
+                    errors:
+                      event_name:
+                        - The event name has already been taken.
+                example-1:
+                  summary: Create an event Error
+                  value:
+                    message: The selected user id is invalid.
+                    errors:
+                      user_id:
+                        - The selected user id is invalid.
+  /api/event/update:
+    post:
+      tags:
+        - Event
+      summary: Update an event
+      description: >-
+        This endpoint Updates an existing event. This is a Post request, and
+        requires Authorization bearer Token, which is the token generated on
+        Login. This endpoint consist of  the below payload.
+
+
+
+        ~~ required field ~~
+
+
+        1. event_id : This is a unique ID attached to an Individual Event, it is
+        a string data type
+
+
+
+
+        ~~any one is optional field~~
+
+        2. event_name :  This is the name of the Event, it accepts a string data
+        type
+
+
+        3. user_id : this is the UiD returned at the login, its unique to
+        individual authenticated users. this endpoint is expecting  a string
+        datatype.
+
+
+        4. event_name: this is unique and is being validated at the backend. it
+        accepts string data type.
+
+
+        5. location : This is the address or landmark to where the event will
+        take place.
+
+
+        6. event_date : This is the exact date of the event, it accepts a string
+        datatype.
+
+
+        7. status : This is an Enum field, it accepts only one of this two
+        'active' or 'inactive' by default an event that's about to be created is
+        active
+
+
+        8. type : This is an Enum field, it accepts only one of htis two 'free',
+        'paid' . a paid event will make use of paystack as the payment gateway.
+
+
+        9. maximun_seats : This is the total number of reservations available
+        for the event. it accepts string or integer data type.
+
+
+        10. start_time : This is the expected start time of the event, it
+        accepts a string data type
+
+
+        11. end_time : This is the presumed time the event will end. its a
+        string data type, and not a required field.
+
+
+        12. file : This is can be a picture or a short advertisement video not
+        more than 2mb in size. this is an optional field.
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                event_id:
+                  type: string
+                  example: 96f99e6e-3d9c-40b0-80cc-dd2393ee1d62
+                event_name:
+                  type: string
+                  example: NaijaHacks hundred 10
+                location:
+                  type: string
+                  example: Zone Tech park, Gbagada, Lagos
+                event_date:
+                  type: string
+                  example: '2022-12-23'
+                type:
+                  type: string
+                  example: paid
+                start_time:
+                  type: string
+                  example: '39:00'
+                end_time:
+                  type: string
+                  example: '40:00'
+                file:
+                  type: string
+                  format: binary
+                maximun_seats:
+                  type: integer
+                  example: '50'
+                status:
+                  type: string
+                  example: active
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+      responses:
+        '200':
+          description: OK
+          headers:
+            Host:
+              schema:
+                type: number
+                example: 127.0.0.1:8000
+            Date:
+              schema:
+                type: string
+                example: Mon, 08 Aug 2022 10:51:52 GMT
+            Connection:
+              schema:
+                type: string
+                example: close
+            X-Powered-By:
+              schema:
+                type: number
+                example: PHP/8.1.8
+            Cache-Control:
+              schema:
+                type: string
+                example: no-cache, private
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+            X-RateLimit-Limit:
+              schema:
+                type: integer
+                example: '60'
+            X-RateLimit-Remaining:
+              schema:
+                type: integer
+                example: '58'
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                status: Success
+                message: Event updated successfully
+                data:
+                  event:
+                    id: 96f8d76f-23e9-4e68-9bbd-50603b162683
+                    event_name: NaijaHacks hundred 10
+                    location: Zone Tech park, Gbagada, Lagos
+                    event_date: '2022-10-23'
+                    event_uid: 96f8d76f-23e9-4e68-9bbd-50603b162683
+                    maximun_seats: '50'
+                    start_time: '39:00'
+                    media_file: null
+                    type: paid
+                    user:
+                      id: 1
+                      uid: 96f8c9d6-528d-471a-94b9-4e210832fa4a
+                      first_name: Abiola
+                      last_name: Yakubu
+                      email: yakubuabiola2003@gmail.com
+                      email_verified_at: null
+                      created_at: '2022-08-08T10:00:23.000000Z'
+                      updated_at: '2022-08-08T10:00:23.000000Z'
+                    ticket: []
+        '422':
+          description: Unprocessable Content
+          headers:
+            Host:
+              schema:
+                type: number
+                example: 127.0.0.1:8000
+            Date:
+              schema:
+                type: string
+                example: Mon, 08 Aug 2022 10:54:31 GMT
+            Connection:
+              schema:
+                type: string
+                example: close
+            X-Powered-By:
+              schema:
+                type: number
+                example: PHP/8.1.8
+            Cache-Control:
+              schema:
+                type: string
+                example: no-cache, private
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+            X-RateLimit-Limit:
+              schema:
+                type: integer
+                example: '60'
+            X-RateLimit-Remaining:
+              schema:
+                type: integer
+                example: '59'
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                message: The event name has already been taken.
+                errors:
+                  event_name:
+                    - The event name has already been taken.
+  /api/event/delete:
+    delete:
+      tags:
+        - Event
+      summary: Delete an event
+      description: >-
+        This endpoint deletes an existing event that hasn't been booked. it
+        required the Authorization bearer token that's generated upon login. it
+        accept the following payload.
+
+
+        1. event_id : This is a unique ID attached to an Individual Event
+
+
+        2. event_name : This is the name of the Event
+
+
+
+        The two fields are required by this request.
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+      responses:
+        '200':
+          description: OK
+          headers:
+            Host:
+              schema:
+                type: number
+                example: 127.0.0.1:8000
+            Date:
+              schema:
+                type: string
+                example: Mon, 08 Aug 2022 11:34:14 GMT
+            Connection:
+              schema:
+                type: string
+                example: close
+            X-Powered-By:
+              schema:
+                type: number
+                example: PHP/8.1.8
+            Cache-Control:
+              schema:
+                type: string
+                example: no-cache, private
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+            X-RateLimit-Limit:
+              schema:
+                type: integer
+                example: '60'
+            X-RateLimit-Remaining:
+              schema:
+                type: integer
+                example: '59'
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                status: Success
+                message: Event deleted successfully
+                data: null
+        '422':
+          description: Unprocessable Content
+          headers:
+            Host:
+              schema:
+                type: number
+                example: 127.0.0.1:8000
+            Date:
+              schema:
+                type: string
+                example: Mon, 08 Aug 2022 11:33:26 GMT
+            Connection:
+              schema:
+                type: string
+                example: close
+            X-Powered-By:
+              schema:
+                type: number
+                example: PHP/8.1.8
+            Cache-Control:
+              schema:
+                type: string
+                example: no-cache, private
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+            X-RateLimit-Limit:
+              schema:
+                type: integer
+                example: '60'
+            X-RateLimit-Remaining:
+              schema:
+                type: integer
+                example: '58'
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                message: The selected event id is invalid.
+                errors:
+                  event_id:
+                    - The selected event id is invalid.
+  /api/event/my-events:
+    get:
+      tags:
+        - Event
+      summary: My events
+      description: >-
+        This is a get request endpoint that returns all Events created by the
+        authenticated user.
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: OK
+          headers:
+            Host:
+              schema:
+                type: number
+                example: 127.0.0.1:8000
+            Date:
+              schema:
+                type: string
+                example: Mon, 08 Aug 2022 11:09:13 GMT
+            Connection:
+              schema:
+                type: string
+                example: close
+            X-Powered-By:
+              schema:
+                type: number
+                example: PHP/8.1.8
+            Cache-Control:
+              schema:
+                type: string
+                example: no-cache, private
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+            X-RateLimit-Limit:
+              schema:
+                type: integer
+                example: '60'
+            X-RateLimit-Remaining:
+              schema:
+                type: integer
+                example: '59'
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                status: Success
+                message: Event fetched successfully
+                data:
+                  events:
+                    - id: 96f8cf06-1052-4419-9357-dd346d135aee
+                      event_name: NaijaHacks hundred
+                      location: Zone Tech park, Gbagada, Lagos
+                      event_date: '2022-10-23'
+                      event_uid: 96f8cf06-1052-4419-9357-dd346d135aee
+                      maximun_seats: '50'
+                      start_time: '39:00'
+                      media_file: null
+                      type: paid
+                      user:
+                        id: 1
+                        uid: 96f8c9d6-528d-471a-94b9-4e210832fa4a
+                        first_name: Abiola
+                        last_name: Yakubu
+                        email: yakubuabiola2003@gmail.com
+                        email_verified_at: null
+                        created_at: '2022-08-08T10:00:23.000000Z'
+                        updated_at: '2022-08-08T10:00:23.000000Z'
+                      ticket: []
+                    - id: 96f8d76f-23e9-4e68-9bbd-50603b162683
+                      event_name: NaijaHacks hundred 10
+                      location: Zone Tech park, Gbagada, Lagos
+                      event_date: '2022-12-23'
+                      event_uid: 96f8d76f-23e9-4e68-9bbd-50603b162683
+                      maximun_seats: '50'
+                      start_time: '39:00'
+                      media_file: null
+                      type: paid
+                      user:
+                        id: 1
+                        uid: 96f8c9d6-528d-471a-94b9-4e210832fa4a
+                        first_name: Abiola
+                        last_name: Yakubu
+                        email: yakubuabiola2003@gmail.com
+                        email_verified_at: null
+                        created_at: '2022-08-08T10:00:23.000000Z'
+                        updated_at: '2022-08-08T10:00:23.000000Z'
+                      ticket: []
+  /api/event:
+    get:
+      tags:
+        - Event
+      summary: All Events
+      description: >-
+        This Endpoint is a get request that returns list of available events in
+        STACK order to the Homepage for Guest to make reservation.
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: OK
+          headers:
+            Host:
+              schema:
+                type: number
+                example: 127.0.0.1:8000
+            Date:
+              schema:
+                type: string
+                example: Mon, 08 Aug 2022 11:10:03 GMT
+            Connection:
+              schema:
+                type: string
+                example: close
+            X-Powered-By:
+              schema:
+                type: number
+                example: PHP/8.1.8
+            Cache-Control:
+              schema:
+                type: string
+                example: no-cache, private
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+            X-RateLimit-Limit:
+              schema:
+                type: integer
+                example: '60'
+            X-RateLimit-Remaining:
+              schema:
+                type: integer
+                example: '58'
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                status: Success
+                message: Event fetched successfully
+                data:
+                  events:
+                    - id: 96f8d76f-23e9-4e68-9bbd-50603b162683
+                      event_name: NaijaHacks hundred 10
+                      location: Zone Tech park, Gbagada, Lagos
+                      event_date: '2022-12-23'
+                      event_uid: 96f8d76f-23e9-4e68-9bbd-50603b162683
+                      maximun_seats: '50'
+                      start_time: '39:00'
+                      media_file: null
+                      type: paid
+                      user:
+                        id: 1
+                        uid: 96f8c9d6-528d-471a-94b9-4e210832fa4a
+                        first_name: Abiola
+                        last_name: Yakubu
+                        email: yakubuabiola2003@gmail.com
+                        email_verified_at: null
+                        created_at: '2022-08-08T10:00:23.000000Z'
+                        updated_at: '2022-08-08T10:00:23.000000Z'
+                      ticket: []
+                    - id: 96f8cf06-1052-4419-9357-dd346d135aee
+                      event_name: NaijaHacks hundred
+                      location: Zone Tech park, Gbagada, Lagos
+                      event_date: '2022-10-23'
+                      event_uid: 96f8cf06-1052-4419-9357-dd346d135aee
+                      maximun_seats: '50'
+                      start_time: '39:00'
+                      media_file: null
+                      type: paid
+                      user:
+                        id: 1
+                        uid: 96f8c9d6-528d-471a-94b9-4e210832fa4a
+                        first_name: Abiola
+                        last_name: Yakubu
+                        email: yakubuabiola2003@gmail.com
+                        email_verified_at: null
+                        created_at: '2022-08-08T10:00:23.000000Z'
+                        updated_at: '2022-08-08T10:00:23.000000Z'
+                      ticket: []
+  /api/event/create-ticket:
+    post:
+      tags:
+        - Event
+      summary: Create Ticket
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                event_id: 96f99e6e-3d9c-40b0-80cc-dd2393ee1d62
+                amount: 5000
+                type: platinum
+                maximum_reservation: 15
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: OK
+          headers:
+            Host:
+              schema:
+                type: number
+                example: 127.0.0.1:8000
+            Date:
+              schema:
+                type: string
+                example: Fri, 05 Aug 2022 10:30:23 GMT
+            Connection:
+              schema:
+                type: string
+                example: close
+            X-Powered-By:
+              schema:
+                type: number
+                example: PHP/8.1.8
+            Cache-Control:
+              schema:
+                type: string
+                example: no-cache, private
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+            X-RateLimit-Limit:
+              schema:
+                type: integer
+                example: '60'
+            X-RateLimit-Remaining:
+              schema:
+                type: integer
+                example: '58'
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+          content:
+            application/json:
+              schema:
+                type: object
+              examples:
+                example-0:
+                  summary: Create Ticket
+                  value:
+                    status: Success
+                    message: Ticket created successfully
+                    data:
+                      ticket:
+                        uid: 96f2cb9c-3fd7-4c08-9e07-d985160e08c3
+                        event_id: 1
+                        amount: 5000
+                        type: regular
+                        maximum_reservation: 4029
+                        updated_at: '2022-08-05T10:30:22.000000Z'
+                        created_at: '2022-08-05T10:30:22.000000Z'
+                        id: 3
+                example-1:
+                  summary: Create Ticket
+                  value:
+                    status: Success
+                    message: Ticket created successfully
+                    data:
+                      ticket:
+                        event_id: 2
+                        type: gold
+                        uid: 96f8ea36-6478-47f0-ad59-9841e63ff9d8
+                        amount: 5000
+                        current_reservation: '0'
+                        maximum_reservation: 10
+                        updated_at: '2022-08-08T11:30:54.000000Z'
+                        created_at: '2022-08-08T11:30:54.000000Z'
+                        id: 2
+        '401':
+          description: Unauthorized
+          headers:
+            Host:
+              schema:
+                type: number
+                example: 127.0.0.1:8000
+            Date:
+              schema:
+                type: string
+                example: Mon, 08 Aug 2022 11:17:51 GMT
+            Connection:
+              schema:
+                type: string
+                example: close
+            X-Powered-By:
+              schema:
+                type: number
+                example: PHP/8.1.8
+            Cache-Control:
+              schema:
+                type: string
+                example: no-cache, private
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+            X-RateLimit-Limit:
+              schema:
+                type: integer
+                example: '60'
+            X-RateLimit-Remaining:
+              schema:
+                type: integer
+                example: '58'
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+          content:
+            application/json:
+              schema:
+                type: object
+              examples:
+                example-0:
+                  summary: Create Ticket Error
+                  value:
+                    status: Error
+                    message: >-
+                      The maximum reservation you supplied is higher than the
+                      seats left
+                    data: 50 seats remaining
+                example-1:
+                  summary: Create Ticket error 2
+                  value:
+                    status: Error
+                    message: You already create a regular ticket for this event
+                    data: ' seats remaining'
+  /api/register:
+    post:
+      tags:
+        - Authentication
+      summary: Register Request
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                first_name: Abiola
+                last_name: Yakubu
+                email: yakubuabiola2003@gmail.com
+                password: '@we4mk10qMM'
+                password_confirmation: '@we4mk10qMM'
+      parameters:
+        - name: accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+      responses:
+        '201':
+          description: Created
+          headers:
+            Host:
+              schema:
+                type: number
+                example: 127.0.0.1:8000
+            Date:
+              schema:
+                type: string
+                example: Mon, 08 Aug 2022 10:00:24 GMT
+            Connection:
+              schema:
+                type: string
+                example: close
+            X-Powered-By:
+              schema:
+                type: number
+                example: PHP/8.1.8
+            Cache-Control:
+              schema:
+                type: string
+                example: no-cache, private
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+            X-RateLimit-Limit:
+              schema:
+                type: integer
+                example: '60'
+            X-RateLimit-Remaining:
+              schema:
+                type: integer
+                example: '59'
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                status: Success
+                message: User created successfully
+                data:
+                  token: 1|iAjAGDXO3oVRHbt6kyhL8l1cHRizNuoratAjDS8t
+                  user_details:
+                    uid: 96f8c9d6-528d-471a-94b9-4e210832fa4a
+                    first_name: Abiola
+                    last_name: Yakubu
+                    email: yakubuabiola2003@gmail.com
+                    updated_at: '2022-08-08T10:00:23.000000Z'
+                    created_at: '2022-08-08T10:00:23.000000Z'
+                    id: 1
+        '422':
+          description: Unprocessable Content
+          headers:
+            Host:
+              schema:
+                type: number
+                example: 127.0.0.1:8000
+            Date:
+              schema:
+                type: string
+                example: Mon, 08 Aug 2022 09:59:14 GMT
+            Connection:
+              schema:
+                type: string
+                example: close
+            X-Powered-By:
+              schema:
+                type: number
+                example: PHP/8.1.8
+            Cache-Control:
+              schema:
+                type: string
+                example: no-cache, private
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+            X-RateLimit-Limit:
+              schema:
+                type: integer
+                example: '60'
+            X-RateLimit-Remaining:
+              schema:
+                type: integer
+                example: '58'
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+          content:
+            application/json:
+              schema:
+                type: object
+              examples:
+                example-0:
+                  summary: Register error, password condition not satisfied
+                  value:
+                    message: >-
+                      The password must contain at least one uppercase and one
+                      lowercase letter.
+                    errors:
+                      password:
+                        - >-
+                          The password must contain at least one uppercase and
+                          one lowercase letter.
+                example-1:
+                  summary: Register error email taken
+                  value:
+                    message: The email has already been taken.
+                    errors:
+                      email:
+                        - The email has already been taken.
+  /api/signin:
+    post:
+      tags:
+        - Authentication
+      summary: Login Request
+      description: >-
+        This is a Post Method, The expected payload are as below
+
+
+        1. email : the email you use in registration during registration.
+
+
+        2. password : the password you supplied during registration.
+
+
+
+        the endpoint shall return a response both on success or on error, you
+        are encouraged to view the example at the example dropdown
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                email: yakubuabiola2003@gmail.com
+                password: '@we4mk10qMM'
+      responses:
+        '200':
+          description: OK
+          headers:
+            Host:
+              schema:
+                type: number
+                example: 127.0.0.1:8000
+            Date:
+              schema:
+                type: string
+                example: Mon, 08 Aug 2022 10:02:23 GMT
+            Connection:
+              schema:
+                type: string
+                example: close
+            X-Powered-By:
+              schema:
+                type: number
+                example: PHP/8.1.8
+            Cache-Control:
+              schema:
+                type: string
+                example: no-cache, private
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+            X-RateLimit-Limit:
+              schema:
+                type: integer
+                example: '60'
+            X-RateLimit-Remaining:
+              schema:
+                type: integer
+                example: '58'
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                status: Success
+                message: login successful
+                data:
+                  token: 2|nHPl1FcYI4Yje4RzgNGz7clx777t5zP26hgSqYmW
+                  user:
+                    id: 1
+                    uid: 96f8c9d6-528d-471a-94b9-4e210832fa4a
+                    first_name: Abiola
+                    last_name: Yakubu
+                    email: yakubuabiola2003@gmail.com
+                    email_verified_at: null
+                    created_at: '2022-08-08T10:00:23.000000Z'
+                    updated_at: '2022-08-08T10:00:23.000000Z'
+        '401':
+          description: Unauthorized
+          headers:
+            Host:
+              schema:
+                type: number
+                example: 127.0.0.1:8000
+            Date:
+              schema:
+                type: string
+                example: Mon, 08 Aug 2022 10:01:51 GMT
+            Connection:
+              schema:
+                type: string
+                example: close
+            X-Powered-By:
+              schema:
+                type: number
+                example: PHP/8.1.8
+            Cache-Control:
+              schema:
+                type: string
+                example: no-cache, private
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+            X-RateLimit-Limit:
+              schema:
+                type: integer
+                example: '60'
+            X-RateLimit-Remaining:
+              schema:
+                type: integer
+                example: '59'
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                status: Error
+                message: Credentials do not match our records
+                data: null
+  /api/sign-out:
+    get:
+      tags:
+        - Authentication
+      summary: Signout Request
+      description: >-
+        This is a get request that signs a user out from the system . no payload
+        for this endpoint. a response will be return on success and on error.
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+      responses:
+        '200':
+          description: OK
+          headers:
+            Host:
+              schema:
+                type: number
+                example: 127.0.0.1:8000
+            Date:
+              schema:
+                type: string
+                example: Mon, 08 Aug 2022 10:04:39 GMT
+            Connection:
+              schema:
+                type: string
+                example: close
+            X-Powered-By:
+              schema:
+                type: number
+                example: PHP/8.1.8
+            Cache-Control:
+              schema:
+                type: string
+                example: no-cache, private
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+            X-RateLimit-Limit:
+              schema:
+                type: integer
+                example: '60'
+            X-RateLimit-Remaining:
+              schema:
+                type: integer
+                example: '59'
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                message: Tokens Revoked
+        '401':
+          description: Unauthorized
+          headers:
+            Host:
+              schema:
+                type: number
+                example: 127.0.0.1:8000
+            Date:
+              schema:
+                type: string
+                example: Mon, 08 Aug 2022 10:03:17 GMT
+            Connection:
+              schema:
+                type: string
+                example: close
+            X-Powered-By:
+              schema:
+                type: number
+                example: PHP/8.1.8
+            Cache-Control:
+              schema:
+                type: string
+                example: no-cache, private
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                message: Unauthenticated.
+  /api/:
+    get:
+      tags:
+        - General
+      summary: All Events Customer Request
+      description: >-
+        This Endpoint is a get request that returns list of available events in
+        STACK order to the Homepage for Guest to make reservation.
+      responses:
+        '200':
+          description: OK
+          headers:
+            Host:
+              schema:
+                type: number
+                example: 127.0.0.1:8000
+            Date:
+              schema:
+                type: string
+                example: Mon, 15 Aug 2022 10:34:27 GMT
+            Connection:
+              schema:
+                type: string
+                example: close
+            X-Powered-By:
+              schema:
+                type: number
+                example: PHP/8.1.8
+            Cache-Control:
+              schema:
+                type: string
+                example: no-cache, private
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+            X-RateLimit-Limit:
+              schema:
+                type: integer
+                example: '60'
+            X-RateLimit-Remaining:
+              schema:
+                type: integer
+                example: '59'
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                status: Success
+                message: Event fetched successfully
+                data:
+                  events:
+                    - id: 96f99e6e-3d9c-40b0-80cc-dd2393ee1d62
+                      event_name: NaijaHacks hundred 10
+                      location: Zone Tech park, Gbagada, Lagos
+                      event_date: '2022-12-23'
+                      event_uid: 96f99e6e-3d9c-40b0-80cc-dd2393ee1d62
+                      maximun_seats: '50'
+                      start_time: '39:00'
+                      media_file: >-
+                        /storage/file/1659988490_Screenshot from 2022-08-07
+                        18-49-13.png
+                      type: free
+                      user:
+                        id: 1
+                        uid: 96f99c05-7cd7-4cc8-83ef-3ae0631ec708
+                        first_name: Abiola
+                        last_name: Yakubu
+                        email: yakubuabiola2003@gmail.com
+                        email_verified_at: null
+                        created_at: '2022-08-08T19:48:06.000000Z'
+                        updated_at: '2022-08-08T19:48:06.000000Z'
+                      ticket:
+                        - id: 1
+                          uid: 96f9a0c9-c069-46d0-a207-f00f54f9e742
+                          event_id: 1
+                          amount: 5000
+                          type: gold
+                          current_reservation: '10'
+                          maximum_reservation: '10'
+                          created_at: '2022-08-08T20:01:25.000000Z'
+                          updated_at: '2022-08-13T20:45:08.000000Z'
+                        - id: 2
+                          uid: 96f9a105-4702-40ec-9e1b-41b3de03e200
+                          event_id: 1
+                          amount: 5000
+                          type: regular
+                          current_reservation: '6'
+                          maximum_reservation: '20'
+                          created_at: '2022-08-08T20:02:05.000000Z'
+                          updated_at: '2022-08-15T10:24:18.000000Z'
+                        - id: 3
+                          uid: 96f9a121-003d-4473-a0a4-a9db91bf5268
+                          event_id: 1
+                          amount: 5000
+                          type: silver
+                          current_reservation: '0'
+                          maximum_reservation: '10'
+                          created_at: '2022-08-08T20:02:23.000000Z'
+                          updated_at: '2022-08-08T20:02:23.000000Z'
+                        - id: 4
+                          uid: 96f9a22f-d812-464a-8f3c-f58f2b2dfc53
+                          event_id: 1
+                          amount: 5000
+                          type: platinum
+                          current_reservation: '15'
+                          maximum_reservation: '15'
+                          created_at: '2022-08-08T20:05:20.000000Z'
+                          updated_at: '2022-08-15T09:40:42.000000Z'
+  /api/reservation:
+    post:
+      tags:
+        - General
+      summary: Make Reservation Request
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                name: Yakubu Abiola Jude
+                event_id: 96f99e6e-3d9c-40b0-80cc-dd2393ee1d62
+                phone: '0808989809'
+                email: yakubuabiola2003@gmail.com
+                ticket_type: regular
+                number_of_reservation: '2'
+      parameters:
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+      responses:
+        '200':
+          description: OK
+          headers:
+            Host:
+              schema:
+                type: number
+                example: 127.0.0.1:8000
+            Date:
+              schema:
+                type: string
+                example: Mon, 15 Aug 2022 10:24:20 GMT
+            Connection:
+              schema:
+                type: string
+                example: close
+            X-Powered-By:
+              schema:
+                type: number
+                example: PHP/8.1.8
+            Cache-Control:
+              schema:
+                type: string
+                example: no-cache, private
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+            X-RateLimit-Limit:
+              schema:
+                type: integer
+                example: '60'
+            X-RateLimit-Remaining:
+              schema:
+                type: integer
+                example: '59'
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                status: Success
+                message: booked successfully
+                data:
+                  id: 9706e748-f928-4818-bd51-809a70cfb5bc
+                  number_of_reservation: '2'
+                  receipt_number: NH19809NYHP
+                  ticket_type: regular
+                  name: Yakubu Abiola Jude
+                  phone: '0808989809'
+                  email: yakubuabiola2003@gmail.com
+                  payment:
+                    id: 10
+                    payment_uid: 9706e749-9259-4f3a-8a25-753329d886eb
+                    reservation_uid: 9706e748-f928-4818-bd51-809a70cfb5bc
+                    amount: '00.00'
+                    reference: free
+                    type: free
+                    status: successful
+                    created_at: '2022-08-15T10:24:19.000000Z'
+                    updated_at: '2022-08-15T10:24:19.000000Z'
+                  event:
+                    id: 1
+                    uid: 96f99e6e-3d9c-40b0-80cc-dd2393ee1d62
+                    user_id: 1
+                    event_name: NaijaHacks hundred 10
+                    location: Zone Tech park, Gbagada, Lagos
+                    event_date: '2022-12-23'
+                    start_time: '39:00'
+                    end_time: '40:00'
+                    total_reservation: '31'
+                    maximun_seats: '50'
+                    tickect_type_count: '0'
+                    image_path: >-
+                      /storage/file/1659988490_Screenshot from 2022-08-07
+                      18-49-13.png
+                    status: active
+                    type: free
+                    deleted_at: null
+                    created_at: '2022-08-08T19:54:50.000000Z'
+                    updated_at: '2022-08-15T10:24:20.000000Z'
+  /api/preview-reservation:
+    post:
+      tags:
+        - General
+      summary: previev reservation
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                receipt_number: NH19809SJIG
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
