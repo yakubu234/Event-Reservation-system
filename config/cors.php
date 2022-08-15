@@ -19,7 +19,7 @@ return [
 
     'allowed_methods' => ['*'],
 
-    'allowed_origins' => ['*'],
+    'allowed_origins' => ['https://event-reservation-system.herokuapp.com', 'http://localhost:8080', 'http://localhost:8000'],
 
     'allowed_origins_patterns' => [],
 
