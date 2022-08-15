@@ -51,6 +51,7 @@
             "chmod -R 777 public/json",
             "chmod -R 777 storage/app/",
             "php artisan storage:link",
+            "php artisan optimize:clear",
             "chmod -R 777 public/storage"
 
 
