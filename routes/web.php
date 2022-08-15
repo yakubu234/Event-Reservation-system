@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 
+// header('Access-Control-Allow-Methods:  POST, GET, OPTIONS, PUT, DELETE');
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -14,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('view');
 });
 
 Route::get('sign_out', function () {

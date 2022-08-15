@@ -47,7 +47,13 @@
         ],
         "post-install-cmd": [
             "php artisan clear-compiled",
-            "chmod -R 775 public/"
+            "chmod -R 775 public/",
+            "chmod -R 777 public/json",
+            "chmod -R 777 storage/app/",
+            "php artisan storage:link",
+            "chmod -R 777 public/storage"
+
+
         ]
     },
     "extra": {
