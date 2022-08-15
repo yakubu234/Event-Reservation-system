@@ -38,12 +38,15 @@ class ReservationRequest extends FormRequest
     protected function passedValidation()
     {
 
-        if ($this->request->has('event_id')) {
-            $event = Event::where('uid', $this->event_id)->first();
-            $this->merge([
-                'event_id' => $event->id,
-                'event_type' => $event->type
-            ]);
-        }
+        $event = Event::where('uid', $this->event_id)->first();
+        $eventNameFirstLetters = strtoupper(implode('', array_map(function ($v) {
+            return $v[0];
+        }, explode(' ', $event->event_name))));
+
+        $this->merge([
+            'event_id' => $event->id,
+            'event_type' => $event->type,
+            'event_name_first_letters' => $eventNameFirstLetters
+        ]);
     }
 }

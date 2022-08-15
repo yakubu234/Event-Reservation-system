@@ -26,6 +26,7 @@ class EventResource extends JsonResource
             'type' => $this->type,
             'user' => $this->user,
             'ticket' => $this->ticket,
+            #'reservations' => $this->reservation
 
         ];
     }

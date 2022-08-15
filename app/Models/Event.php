@@ -42,4 +42,9 @@ class Event extends Model
     {
         return $this->hasMany(Ticket::class);
     }
+
+    public function reservation(): HasMany
+    {
+        return $this->hasMany(Reservation::class, 'event_id', 'id');
+    }
 }
