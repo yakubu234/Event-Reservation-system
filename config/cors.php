@@ -19,11 +19,11 @@ return [
 
     'allowed_methods' => ['*'],
 
-    'allowed_origins' => ['https://event-reservation-system.herokuapp.com', 'http://localhost:8080', 'http://localhost:8000', 'http://localhost'],
+    'allowed_origins' => ['https://event-reservation-system.herokuapp.com', 'http://localhost:8080', 'http://localhost:8000', 'http://localhost', '*'],
 
     'allowed_origins_patterns' => [],
 
-    'allowed_headers' =>  ["Content-Type", "Authorization"], # ["*"]
+    'allowed_headers' =>  ['*'], # ["*"]
 
     'exposed_headers' => [],
 
