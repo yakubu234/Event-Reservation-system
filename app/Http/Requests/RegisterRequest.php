@@ -35,7 +35,6 @@ class RegisterRequest extends FormRequest
                     ->mixedCase()
                     ->letters()
                     ->numbers()
-                    ->symbols()
             ]
         ];
     }
