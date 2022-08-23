@@ -15,15 +15,30 @@ return [
     |
     */
 
-    'paths' => ['api/*'],
+    // 'paths' => ['api/*'],
+
+    // 'allowed_methods' => ['*'],
+
+    // 'allowed_origins' => ['https://event-reservation-system.herokuapp.com', 'http://localhost:8080', 'http://localhost:8000', 'http://localhost', 'https://event.abiolayakubu.com.ng'],
+
+    // 'allowed_origins_patterns' => [],
+
+    // 'allowed_headers' =>  ['*'], # ["*"]
+
+    // 'exposed_headers' => [],
+
+    // 'max_age' => 0,
+
+    // 'supports_credentials' => false,
+    'paths' => ['api/*', 'sanctum/csrf-cookie'],
 
     'allowed_methods' => ['*'],
 
-    'allowed_origins' => ['https://event-reservation-system.herokuapp.com', 'http://localhost:8080', 'http://localhost:8000', 'http://localhost', 'https://event.abiolayakubu.com.ng'],
+    'allowed_origins' => ['*'],
 
     'allowed_origins_patterns' => [],
 
-    'allowed_headers' =>  ['*'], # ["*"]
+    'allowed_headers' => ['*'],
 
     'exposed_headers' => [],
 
