@@ -21,7 +21,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::post('register', [AuthController::class, 'register']);
 Route::post('signin', [AuthController::class, 'signin']);
-Route::get('', [EventController::class, 'all']);
+Route::get('all-events', [EventController::class, 'all']);
 Route::post('reservation', [ReservationController::class, 'makeReservation']);
 
 Route::post('preview-reservation', [ReservationController::class, 'previewReservation']);

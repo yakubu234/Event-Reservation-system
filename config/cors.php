@@ -19,11 +19,11 @@ return [
 
     'allowed_methods' => ['*'],
 
-    'allowed_origins' => ['https://event-reservation-system.herokuapp.com', 'http://localhost:8080', 'http://localhost:8000', 'http://localhost', 'https://event.abiolayakubu.com.ng'],
+    'allowed_origins' => ['*'],
 
     'allowed_origins_patterns' => [],
 
-    'allowed_headers' =>  ['*'], # ["*"]
+    'allowed_headers' => ['*'],
 
     'exposed_headers' => [],
 
