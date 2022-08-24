@@ -28,10 +28,12 @@ class RegisterAction
             'password' => bcrypt($this->data['password']),
         ]);
 
+        $token = $user->createToken('API Token')->plainTextToken;
+
         unset($user['id']);
 
         return $this->success([
-            'token' => $user->createToken('API Token')->plainTextToken,
+            'token' => $$token,
             'user_details' => $user
         ], 'User created successfully', 201);
     }
