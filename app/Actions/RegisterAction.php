@@ -33,7 +33,7 @@ class RegisterAction
         unset($user['id']);
 
         return $this->success([
-            'token' => $$token,
+            'token' => $token,
             'user_details' => $user
         ], 'User created successfully', 201);
     }
