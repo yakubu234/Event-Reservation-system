@@ -25,7 +25,7 @@ return new class extends Migration
             $table->string('total_reservation')->nullable();
             $table->string('maximun_seats');
             $table->string('tickect_type_count')->nullable();
-            $table->text('image_path')->nullable();
+            $table->text('image_path')->default((config('services.image_url')));
             $table->enum('status', ['active', 'inactive'])->default('active');
             $table->enum('type', ['free', 'paid']);
             $table->softDeletes();
