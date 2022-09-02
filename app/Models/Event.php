@@ -20,6 +20,7 @@ class Event extends Model
         'event_date',
         'start_time',
         'end_time',
+        'description',
         'total_reservation',
         'maximun_seats',
         'tickect_type_count',
