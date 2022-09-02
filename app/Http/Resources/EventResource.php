@@ -21,6 +21,7 @@ class EventResource extends JsonResource
             'event_date' => $this->event_date,
             'event_uid' => $this->uid,
             'maximun_seats' => $this->maximun_seats,
+            'total_reservation' => $this->total_reservation,
             'start_time' => $this->start_time,
             'media_file' => $this->image_path,
             'type' => $this->type,

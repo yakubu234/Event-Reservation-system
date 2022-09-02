@@ -44,6 +44,8 @@ class CreateTicketAction
             ]
         );
 
+        $event->increment('tickect_type_count', $this->data['maximum_reservation']);
+
         return $this->success(['ticket' => $ticket], 'Ticket created successfully');
     }
 }

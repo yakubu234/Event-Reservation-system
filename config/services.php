@@ -37,4 +37,6 @@ return [
         'callback' => env('PAYSTACK_CALLBACK_URL', 'us-east-1'),
     ],
 
+    'image_url' => [env('IMAGE_URL', 'https://event-reservation-system.herokuapp.com/storage/file/random0293ke3.jpg')],
+
 ];

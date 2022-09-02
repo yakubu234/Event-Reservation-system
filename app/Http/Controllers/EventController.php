@@ -26,7 +26,8 @@ class EventController extends Controller
             $filePath = $request->file('file')->storeAs('file', $fileName, 'public');
             (array) $request = $request->validated();
             unset($data['file']);
-            $data['image_path'] = '/storage/' . $filePath;
+            $baseUrl = str_replace('api.', '', request()->getSchemeAndHttpHost());
+            $data['image_path'] = $baseUrl . '/storage/' . $filePath;
         }
 
         return (new CreateEventAction())->execute($data);
@@ -41,7 +42,8 @@ class EventController extends Controller
             $filePath = $request->file('file')->storeAs('file', $fileName, 'public');
             (array) $request = $request->validated();
             unset($data['file']);
-            $data['image_path'] = '/storage/' . $filePath;
+            $baseUrl = str_replace('api.', '', request()->getSchemeAndHttpHost());
+            $data['image_path'] = $baseUrl . '/storage/' . $filePath;
         }
 
         return (new UpdateEventAction())->execute($data);
