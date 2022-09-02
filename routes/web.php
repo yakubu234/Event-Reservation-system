@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ReservationController;
 use Illuminate\Support\Facades\Route;
 
 // header('Access-Control-Allow-Methods:  POST, GET, OPTIONS, PUT, DELETE');
@@ -23,3 +24,5 @@ Route::get('sign_out', function () {
         'message' => 'Please Login'
     ];
 })->name('unauthenticated');
+
+Route::get('paystack-callback', [ReservationController::class, 'paystackCallback']);

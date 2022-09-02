@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -15,6 +16,8 @@ class EventTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
+
+        $this->withoutExceptionHandling();
         $this->user = User::factory()->create();
     }
 
@@ -29,16 +32,19 @@ class EventTest extends TestCase
         $token = $this->login();
 
         $data =  [
-            'uid' => Str::orderedUuid(),
             'user_id' => (string)$this->user->uid,
             'event_name' => fake()->name(),
             'location' => fake()->address(),
             'event_date' => fake()->date(),
-            'type' => 'free'
+            'start_time' => Carbon::now()->addDays(7),
+            'maximun_seats' => rand(70, 1000),
+            'description' => fake()->word(),
+            'type' => 'free',
+            'status' => 'active'
         ];
 
         $response = $this->post('/api/event/create', $data, ['Authorization' => 'Bearer ' . $token]);
-        $response->assertStatus(200);
+        $response->dump()->assertStatus(200);
     }
 
     private function login()
