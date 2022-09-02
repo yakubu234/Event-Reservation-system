@@ -27,7 +27,7 @@ class EventIdOnlyRequest extends FormRequest
         return [
             'event_id' => ['required', 'string', 'exists:events,uid'],
             'event_name' => ['string', 'unique:events,event_name'],
-            'description' => ['text'],
+            'description' => ['string'],
             'location' => ['string'],
             'event_date' => ['date_format:Y-m-d'],
             'status' => ['in:active,inactive'],
