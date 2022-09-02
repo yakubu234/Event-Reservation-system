@@ -22,7 +22,7 @@ class EventController extends Controller
         $data = $request->all();
 
         if ($request->file()) {
-            $fileName = time() . '_' . $request->file->getClientOriginalName();
+            $fileName = uniqid() . time() . '_' . $request->file->getClientOriginalName();
             $filePath = $request->file('file')->storeAs('file', $fileName, 'public');
             (array) $request = $request->validated();
             unset($data['file']);
@@ -38,7 +38,7 @@ class EventController extends Controller
         $data = $request->all();
 
         if ($request->file()) {
-            $fileName = time() . '_' . $request->file->getClientOriginalName();
+            $fileName = uniqid() . time() . '_' . $request->file->getClientOriginalName();
             $filePath = $request->file('file')->storeAs('file', $fileName, 'public');
             (array) $request = $request->validated();
             unset($data['file']);
