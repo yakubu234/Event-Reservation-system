@@ -55,7 +55,7 @@ class TicketTest extends TestCase
         ];
 
         $response = $this->post('/api/event/create-ticket', $data, ['Authorization' => 'Bearer ' . $this->token]);
-        $response->dump()->assertStatus(200);
+        $response->assertStatus(200);
     }
 
     private function login()
