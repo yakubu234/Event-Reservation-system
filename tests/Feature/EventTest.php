@@ -44,7 +44,7 @@ class EventTest extends TestCase
         ];
 
         $response = $this->post('/api/event/create', $data, ['Authorization' => 'Bearer ' . $token]);
-        $response->dump()->assertStatus(200);
+        $response->assertStatus(200);
     }
 
     private function login()
