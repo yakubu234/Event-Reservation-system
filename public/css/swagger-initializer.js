@@ -3,7 +3,7 @@ window.onload = function() {
 
   // the following lines will be replaced by docker/configurator, when it runs in a docker-container
   window.ui = SwaggerUIBundle({
-    url:"https://event-reservation-system.herokuapp.com/json/openapi.json",
+    url:"https://event-api.mockup.com.ng/json/openapi.json",
     // url:"https://event-reservation-system.herokuapp.com/json/swagger-api.json",
     dom_id: '#swagger-ui',
     deepLinking: true,
