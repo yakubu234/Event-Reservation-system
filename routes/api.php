@@ -37,7 +37,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
 
         Route::post('update', [EventController::class, 'update']);
-        Route::delete('delete', [EventController::class, 'delete']);
+        Route::post('delete', [EventController::class, 'delete']);
         Route::post('create-ticket', [EventController::class, 'createTicket']);
     });
 });
