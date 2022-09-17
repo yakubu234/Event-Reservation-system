@@ -3,6 +3,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\LogController;
 use App\Http\Controllers\ReservationController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -18,6 +19,9 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+
+Route::get('/logs', [LogController::class, 'viewLogs'])->name('logs');
+Route::get('/clear-logs', [LogController::class, 'clearLogs']);
 
 Route::post('register', [AuthController::class, 'register']);
 Route::post('signin', [AuthController::class, 'signin']);
