@@ -31,6 +31,7 @@ class ReservationRequest extends FormRequest
             'email' => ['required', 'email'],
             'ticket_type' => ['required', 'in:regular,gold,silver,platinum'],
             'number_of_reservation' => ['required', 'integer'],
+            'calback_url' => ['required', 'string'],
 
         ];
     }
