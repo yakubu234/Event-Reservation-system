@@ -24,5 +24,3 @@ Route::get('sign_out', function () {
         'message' => 'Please Login'
     ];
 })->name('unauthenticated');
-
-Route::get('paystack-callback', [ReservationController::class, 'paystackCallback']);

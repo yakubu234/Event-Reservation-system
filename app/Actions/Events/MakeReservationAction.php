@@ -39,6 +39,17 @@ class MakeReservationAction
         return $this->proceedToPayment($data);
     }
 
+    public function payloadFromPaystackCallback($data)
+    {
+        $metadata = $data['metadata'];
+        $ticket = Ticket::where(array('type' => $metadata['ticket_type'], 'event_id' => $metadata['event_id']))->first();
+
+        $ticket->increment('current_reservation', $metadata['number_of_reservation']);
+
+        $metadata = array_merge($metadata, ['amount' => $metadata['amount'], 'status' => 'successful', 'reference' => $data['reference']]);
+        return $this->saveReservation($metadata);
+    }
+
     private function saveReservation($data)
     {
         $receipt = $data['event_name_first_letters'] . substr($data['phone'], -4) . strtoupper(Str::random(4));
