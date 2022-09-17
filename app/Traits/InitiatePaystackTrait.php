@@ -18,7 +18,7 @@ trait InitiatePaystackTrait
         $metadata = json_encode($data);
         $this->paystack_url = (config('services.paystack.base_url'));
         $this->paystack_key = (config('services.paystack.secret'));
-        $this->callback_url = (config('services.paystack.callback'));
+        $this->callback_url = ($data['calback_url']) ? $data['calback_url'] : (config('services.paystack.callback'));
         try {
 
             $response = Http::withToken($this->paystack_key)->asForm()->post(

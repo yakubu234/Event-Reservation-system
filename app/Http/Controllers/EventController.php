@@ -10,6 +10,7 @@ use App\Actions\Events\MyEventsAction;
 use App\Actions\Events\UpdateEventAction;
 use App\Http\Requests\CreateEventRequest;
 use App\Http\Requests\CreateTicketRequest;
+use App\Http\Requests\DeleteEventRequest;
 use App\Http\Requests\EventIdOnlyRequest;
 use App\Http\Requests\UserIdOnlyRequest;
 use Illuminate\Http\Request;
@@ -49,7 +50,7 @@ class EventController extends Controller
         return (new UpdateEventAction())->execute($data);
     }
 
-    public function delete(EventIdOnlyRequest $request)
+    public function delete(DeleteEventRequest $request)
     {
         return (new DeleteEventAction())->execute($request->all());
     }
