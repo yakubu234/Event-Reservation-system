@@ -3,6 +3,7 @@
 namespace App\Traits;
 
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 
 trait InitiatePaystackTrait
 {
@@ -19,6 +20,7 @@ trait InitiatePaystackTrait
         $this->paystack_url = (config('services.paystack.base_url'));
         $this->paystack_key = (config('services.paystack.secret'));
         $this->callback_url = ($data['calback_url']) ? $data['calback_url'] : (config('services.paystack.callback'));
+        Log::info($this->callback_url);
         try {
 
             $response = Http::withToken($this->paystack_key)->asForm()->post(
