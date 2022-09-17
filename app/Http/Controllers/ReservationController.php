@@ -29,9 +29,9 @@ class ReservationController extends Controller
         return $this->success((new ReservationResource($reservation[0])), 'booked successfully', 200);
     }
 
-    // public function paystackCallback(Request $data)
-    // {
-    //     $reference = $data->query('reference');
-    //     return $this->getCallbackData($reference);
-    // }
+    public function paystackCallback(Request $request)
+    {
+        $reference = $request->reference;
+        return $this->getCallbackData($reference);
+    }
 }

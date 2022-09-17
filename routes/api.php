@@ -29,6 +29,8 @@ Route::get('all-events', [EventController::class, 'all']);
 
 Route::post('reservation', [ReservationController::class, 'makeReservation']);
 
+Route::post('validate-payment', [ReservationController::class, 'paystackCallback']);
+
 Route::post('preview-reservation', [ReservationController::class, 'previewReservation']);
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
