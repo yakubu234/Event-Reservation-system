@@ -39,4 +39,11 @@ return [
 
     'image_url' => [env('IMAGE_URL', 'https://event-reservation-system.herokuapp.com/storage/file/random0293ke3.jpg')],
 
+    'email' => [
+        'from_address' => env('FROM_ADDRESS'),
+        'from_name' => env('FROM_NAME'),
+        'mailgun_api_key' => env('MAILGUN_API_KEY'),
+        'mailgun_url' => env('MAILGUN_URL', 'mg.mockup.com.ng'),
+    ],
+
 ];
