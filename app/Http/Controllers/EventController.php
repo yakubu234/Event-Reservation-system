@@ -13,6 +13,8 @@ use App\Http\Requests\CreateTicketRequest;
 use App\Http\Requests\DeleteEventRequest;
 use App\Http\Requests\EventIdOnlyRequest;
 use App\Http\Requests\UserIdOnlyRequest;
+use App\Http\Resources\ReservationResource;
+use App\Models\Reservation;
 use Illuminate\Http\Request;
 
 class EventController extends Controller
@@ -68,5 +70,18 @@ class EventController extends Controller
     public function createTicket(CreateTicketRequest $request)
     {
         return (new CreateTicketAction())->execute($request->validated());
+    }
+
+    public function previewBookings(DeleteEventRequest $request)
+    {
+        $reservation = Reservation::where('event_id', $request->event_id)->latest()->paginate(50);
+
+        if ($reservation->isEmpty()) return $this->error('Receipt number is invalid', 402, 'receipt number is invalid');
+
+        $resourceData = [
+            ReservationResource::collection($reservation)->response()->getData(true)
+        ];
+
+        return $this->success($resourceData, 'booked successfully', 200);
     }
 }
