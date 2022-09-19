@@ -32,6 +32,7 @@ Route::post('reservation', [ReservationController::class, 'makeReservation']);
 Route::post('validate-payment', [ReservationController::class, 'paystackCallback']);
 
 Route::post('preview-reservation', [ReservationController::class, 'previewReservation']);
+Route::post('reservation-history', [ReservationController::class, 'reservationHistory']);
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('/sign-out', [AuthController::class, 'logout']);
@@ -45,5 +46,6 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
         Route::post('update', [EventController::class, 'update']);
         Route::post('delete', [EventController::class, 'delete']);
         Route::post('create-ticket', [EventController::class, 'createTicket']);
+        Route::post('view-bookings', [EventController::class, 'previewBookings']);
     });
 });

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Actions\Events\MakeReservationAction;
 use App\Http\Requests\ReceiptNumberOnlyRequest;
+use App\Http\Requests\ReservationHistoryRequest;
 use App\Http\Requests\ReservationRequest;
 use App\Http\Resources\ReservationResource;
 use App\Models\Reservation;
@@ -33,5 +34,18 @@ class ReservationController extends Controller
     {
         $reference = $request->reference;
         return $this->getCallbackData($reference);
+    }
+
+    public function reservationHistory(ReservationHistoryRequest $request)
+    {
+        $searcKey = $request->validated();
+        $reservation = Reservation::where('email', 'LIKE', "%{$searcKey}%")->orWhere('phone', 'LIKE', "%{$searcKey}%")->latest()->paginate(50);
+
+        if ($reservation->isEmpty()) return $this->error('Receipt number is invalid', 402, 'receipt number is invalid');
+        $resourceData = [
+            ReservationResource::collection($reservation)->response()->getData(true)
+        ];
+
+        return $this->success($resourceData, 'booked successfully', 200);
     }
 }
