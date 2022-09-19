@@ -17,7 +17,6 @@ trait paystackCallbackTrait
 
     public function validateReference($reference)
     {
-        Log::info($reference);
         $this->paystack_url = (config('services.paystack.base_url'));
         $this->paystack_key = (config('services.paystack.secret'));
         try {
