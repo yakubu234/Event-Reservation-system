@@ -41,7 +41,7 @@ class ReservationController extends Controller
         $searcKey = $request->email ? $request->email : $request->phone;
         $reservation = Reservation::where('email', 'LIKE', "%{$searcKey}%")->orWhere('phone', 'LIKE', "%{$searcKey}%")->latest()->paginate(50);
 
-        if ($reservation->isEmpty()) return $this->error('Receipt number is invalid', 402, 'receipt number is invalid');
+        if ($reservation->isEmpty()) return $this->error('The data is invalid', 402, 'The data is invalid');
         $resourceData = [
             ReservationResource::collection($reservation)->response()->getData(true)
         ];

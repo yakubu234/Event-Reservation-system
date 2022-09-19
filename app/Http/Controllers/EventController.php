@@ -76,7 +76,7 @@ class EventController extends Controller
     {
         $reservation = Reservation::where('event_id', $request->event_id)->latest()->paginate(50);
 
-        if ($reservation->isEmpty()) return $this->error('Receipt number is invalid', 402, 'receipt number is invalid');
+        if ($reservation->isEmpty()) return $this->error('Event ID  is invalid', 402, 'Event ID is invalid');
 
         $resourceData = [
             ReservationResource::collection($reservation)->response()->getData(true)
