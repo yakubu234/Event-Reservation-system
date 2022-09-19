@@ -4,6 +4,7 @@ namespace App\Traits;
 
 use App\Actions\Events\MakeReservationAction;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 
 trait paystackCallbackTrait
 {
@@ -21,7 +22,7 @@ trait paystackCallbackTrait
         try {
 
             $response = Http::withToken($this->paystack_key)->asForm()->get(
-                "{$this->paystack_url}transaction/verify/" . rawurlencode($reference)
+                "{$this->paystack_url}transaction/verify/" . $reference
             )->json();
         } catch (\Throwable $th) {
             return $th->getMessage();
