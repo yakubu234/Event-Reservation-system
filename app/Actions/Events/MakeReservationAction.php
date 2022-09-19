@@ -34,7 +34,7 @@ class MakeReservationAction
             return $this->saveReservation($data);
         }
 
-        $data['amount'] = $ticket->amount;
+        $data['amount'] = (int) $ticket->amount * $data['number_of_reservation'];
         $data['tickect_id'] = $ticket->id;
         return $this->proceedToPayment($data);
     }
