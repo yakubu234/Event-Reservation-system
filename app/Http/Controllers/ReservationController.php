@@ -38,7 +38,7 @@ class ReservationController extends Controller
 
     public function reservationHistory(ReservationHistoryRequest $request)
     {
-        $searcKey = $request->validated();
+        $searcKey = $request->email ? $request->email : $request->phone;
         $reservation = Reservation::where('email', 'LIKE', "%{$searcKey}%")->orWhere('phone', 'LIKE', "%{$searcKey}%")->latest()->paginate(50);
 
         if ($reservation->isEmpty()) return $this->error('Receipt number is invalid', 402, 'receipt number is invalid');
