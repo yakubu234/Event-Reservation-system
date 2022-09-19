@@ -26,7 +26,7 @@ trait InitiatePaystackTrait
             $response = Http::withToken($this->paystack_key)->asForm()->post(
                 "{$this->paystack_url}transaction/initialize",
                 [
-                    'amount' => ((int)$data['amount'] * 100),
+                    'amount' => ((float)$data['amount'] * 100),
                     'email' => $data['email'],
                     'name' => $data['name'],
                     'metadata' => $metadata,

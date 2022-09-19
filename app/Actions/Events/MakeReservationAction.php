@@ -34,7 +34,7 @@ class MakeReservationAction
             return $this->saveReservation($data);
         }
 
-        $data['amount'] = (int) $ticket->amount * $data['number_of_reservation'];
+        $data['amount'] = ((float) $ticket->amount * (int) $data['number_of_reservation']);
         $data['tickect_id'] = $ticket->id;
         return $this->proceedToPayment($data);
     }
@@ -43,6 +43,11 @@ class MakeReservationAction
     {
         $metadata = $data['metadata'];
         $ticket = Ticket::where(array('type' => $metadata['ticket_type'], 'event_id' => $metadata['event_id']))->first();
+
+        if ($metadata['number_of_reservation'] > $remainder = $ticket->maximum_reservation - $ticket->current_reservation) {
+            $this->prepareRefund($data, $remainder);
+            return $this->error('the ticket is unavailable', 401, "{$remainder} reservation(s) left");
+        }
 
         $ticket->increment('current_reservation', $metadata['number_of_reservation']);
 
@@ -92,5 +97,10 @@ class MakeReservationAction
         ]);
 
         return true;
+    }
+
+    private function prepareRefund($data, $remainder)
+    {
+        # handle the refund in a job
     }
 }
