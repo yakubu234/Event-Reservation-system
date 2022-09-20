@@ -15,10 +15,12 @@ use App\Http\Requests\EventIdOnlyRequest;
 use App\Http\Requests\UserIdOnlyRequest;
 use App\Http\Resources\ReservationResource;
 use App\Models\Reservation;
+use App\Traits\ResponseTrait;
 use Illuminate\Http\Request;
 
 class EventController extends Controller
 {
+    use ResponseTrait;
 
     public function create(CreateEventRequest $request)
     {
